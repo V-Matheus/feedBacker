@@ -15,6 +15,7 @@ module.exports = {
     "comma-dangle": ["off"],
     semi: ["off"],
     "vue/multi-word-component-names": "off",
+    "space-before-function-paren": ["off"],
   },
   overrides: [
     {
