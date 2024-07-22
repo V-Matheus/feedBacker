@@ -60,15 +60,25 @@
 <script>
 import { reactive } from "vue";
 import { useField } from "vee-validate";
+import { useToast } from "vue-toastification";
 import useModal from "../../hooks/useModal";
-import { validateEmptyAndLenght3, validateEmptyAndEmail } from "../../utils/validators";
+import {
+  validateEmptyAndLenght3,
+  validateEmptyAndEmail,
+} from "../../utils/validators";
+import services from "../../services";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
+    const router = useRoute();
     const modal = useModal();
+    const toast = useToast();
 
-    const { value: emailValue, errorMessage: emailErrorMessage } =
-      useField("email", validateEmptyAndEmail);
+    const { value: emailValue, errorMessage: emailErrorMessage } = useField(
+      "email",
+      validateEmptyAndEmail
+    );
 
     const { value: passwordValue, errorMessage: passwordErrorMessage } =
       useField("password", validateEmptyAndLenght3);
@@ -86,7 +96,42 @@ export default {
       },
     });
 
-    function handleSubmit() {}
+    async function handleSubmit() {
+      try {
+        toast.clear();
+        state.isLoading = true;
+        const { data, erros } = await services.auth.login({
+          email: state.email.value,
+          password: state.password.value,
+        });
+
+        if (!erros) {
+          state.isLoading = false;
+          window.localStorage.setItem("token", data.token);
+          router.push({ name: "Feedbacks" });
+          modal.close();
+          return;
+        }
+
+        if (erros.status === 404) {
+          toast.error("E-mail não encontrado");
+        }
+
+        if (erros.status === 401) {
+          toast.error("E-mail/senha inválidos");
+        }
+
+        if (erros.status === 400) {
+          toast.error("Ocorreu um erro ao fazer o login");
+        }
+
+        state.isLoading = false;
+      } catch (error) {
+        state.isLoading = false;
+        state.hasErrors = !!error;
+        toast.error("Ocorreu um erro ao fazer o login");
+      }
+    }
 
     return { state, close: modal.close, handleSubmit };
   },
