@@ -51,7 +51,8 @@
         :disabled="state.isLoading"
         type="submit"
       >
-        Entrar
+        <icon v-if="state.isLoading" name="loading" class="animate-spin" />
+        <span v-else>Entrar</span>
       </button>
     </form>
   </div>
@@ -66,10 +67,12 @@ import {
   validateEmptyAndLenght3,
   validateEmptyAndEmail,
 } from "../../utils/validators";
+import Icon from "../Icon";
 import services from "../../services";
 import { useRoute } from "vue-router";
 
 export default {
+  components: { Icon },
   setup() {
     const router = useRoute();
     const modal = useModal();
