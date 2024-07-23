@@ -33,7 +33,7 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import useStore from "../../hooks/useStore";
-import { cleanCurrentUser } from '@/store/user';
+import { cleanCurrentUser } from "@/store/user";
 export default {
   setup() {
     const router = useRouter();
@@ -48,7 +48,7 @@ export default {
 
     function handleLoggout() {
       window.localStorage.removeItem("token");
-      cleanCurrentUser()
+      cleanCurrentUser();
       router.push({ name: "Home" });
     }
 

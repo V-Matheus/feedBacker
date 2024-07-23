@@ -27,7 +27,7 @@ export default {
           }
 
           // const { data } = await services.users.getMe(); // Estpa dando undefined por erro de autorização da API
-          const data = { name: "matheus" };
+          const data = { name: "matheus", apiKey: '61795062-a37e-48c7-bdb6-50d030051ccb' };
           setCurrentUser(data);
         }
       }
