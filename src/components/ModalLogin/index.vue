@@ -69,12 +69,12 @@ import {
 } from "../../utils/validators";
 import Icon from "../Icon";
 import services from "../../services";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Icon },
   setup() {
-    const router = useRoute();
+    const router = useRouter();
     const modal = useModal();
     const toast = useToast();
 
@@ -130,6 +130,7 @@ export default {
 
         state.isLoading = false;
       } catch (error) {
+        console.log(error);
         state.isLoading = false;
         state.hasErrors = !!error;
         toast.error("Ocorreu um erro ao fazer o login");
