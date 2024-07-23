@@ -4,7 +4,7 @@ const state = reactive({
   currentUser: {},
 });
 
-export default state
+export default state;
 
 export function cleanCurrentUser() {
   state.currentUser = {};
