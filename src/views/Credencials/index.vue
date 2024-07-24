@@ -20,9 +20,19 @@
         Este aqui é a sua chave de api
       </p>
 
-      <div class="flex py-3 pl-5 pr-20 mt-2 rounded items-center bg-brand-gray w-1/2">
+      <content-loader
+        v-if="store.Global.isLoading || state.isLoading"
+        class="rounded"
+        width="600px"
+        height="50px"
+      />
+
+      <div
+        v-else
+        class="flex py-3 pl-5 pr-20 mt-2 rounded justify-between items-center bg-brand-gray w-full lg:w-1/2"
+      >
         <span>{{ store.User.currentUser.apiKey }}</span>
-        <div class="flex ml-20 mr-1">
+        <div class="flex ml-20 mr-5">
           <icon
             name="copy"
             :color="brandColors.graydark"
@@ -41,10 +51,24 @@
         Coloque o script abaixo no seu site para começar a receber feedbacks
       </p>
 
-      <div class="flex py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray w-2/3 overflow-x-scroll">
-        <pre>&lt;script scr="https://V-Matheus-feedbacker-widget.netflify.app?apiKey={{
+      <content-loader />
+
+      <content-loader
+        v-if="store.Global.isLoading || state.isLoading"
+        class="rounded"
+        width="600px"
+        height="50px"
+      />
+
+      <div
+        v-else
+        class="flex py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray w-full lg:w-2/3 overflow-x-scroll"
+      >
+        <pre>
+&lt;script scr="https://V-Matheus-feedbacker-widget.netflify.app?apiKey={{
             store.User.currentUser.apiKey
-          }}"&gt;&lt;/script&gt;</pre>
+          }}"&gt;&lt;/script&gt;</pre
+        >
       </div>
     </div>
   </div>
@@ -53,14 +77,19 @@
 <script>
 import useStore from "@/hooks/useStore";
 import HeaderLogged from "../../components/HeaderLogged";
+import ContentLoader from "../../components/ContentLoader";
 import Icon from "../../components/Icon";
 import palette from "../../../palette";
+import { reactive } from "vue";
 export default {
-  components: { HeaderLogged, Icon },
+  components: { HeaderLogged, Icon, ContentLoader },
 
   setup() {
     const store = useStore();
-    return { store, brandColors: palette.brand };
+    const state = reactive({
+      isLoading: false,
+    });
+    return { state, store, brandColors: palette.brand };
   },
 };
 </script>

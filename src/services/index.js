@@ -42,7 +42,8 @@ httpClient.interceptors.response.use(
     if (error.response?.status === 401) {
       // router.push({ name: "Home" });     Erro de autorização da API gerando loop infinito de Erro
     }
-    setGlobalLoading(true);
+    // setGlobalLoading(true); como está com erro sempre irá ficar carregando
+    setGlobalLoading(false);
 
     return error;
   }

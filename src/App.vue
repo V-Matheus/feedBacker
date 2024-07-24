@@ -7,7 +7,7 @@
 import { watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ModalFactory from "./components/ModalFactory";
-// import services from "./services";
+import services from "./services";
 import { setCurrentUser } from "./store/user";
 
 export default {
@@ -26,8 +26,12 @@ export default {
             return;
           }
 
-          // const { data } = await services.users.getMe(); // Estpa dando undefined por erro de autorização da API
-          const data = { name: "matheus", apiKey: '61795062-a37e-48c7-bdb6-50d030051ccb' };
+          const { dataError } = await services.users.getMe(); // Estpa dando undefined por erro de autorização da API
+          console.log(dataError);
+          const data = {
+            name: "matheus",
+            apiKey: "61795062-a37e-48c7-bdb6-50d030051ccb",
+          };
           setCurrentUser(data);
         }
       }
