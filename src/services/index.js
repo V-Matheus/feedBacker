@@ -20,6 +20,7 @@ httpClient.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    // config.headers.common.Authorization = `Bearer ${token}`; => código mostrado na aula porém retorna undefined por não existir a propriedade common dentro de headers
   }
 
   return config;
